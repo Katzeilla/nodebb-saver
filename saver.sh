@@ -40,6 +40,14 @@ function get_pageCount {
 	echo $result | jq .pagination.pageCount
 }
 
+function topicFound {
+	if [[ $result==="Not Fount"  ]]; then
+		false
+	else
+		true
+	fi
+}
+
 
 function main {
 	check_env
@@ -49,10 +57,12 @@ function main {
 	Topic_ID=1
 	while true
 	do
-	echo "Get topic $Topic_ID"
-	get_topic $Topic_ID
-	echo $result | jq
-	Topic_ID=$(( $Topic_ID + 1 ))
+		echo "Get topic $Topic_ID"
+		get_topic $Topic_ID
+			if [ topicFound ]; then
+			echo $result | jq
+			fi
+		Topic_ID=$(( $Topic_ID + 1 ))
 	done
 
 }
