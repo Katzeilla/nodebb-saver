@@ -10,7 +10,7 @@ A bash script for save NodeBB content as json file
 2. export Saver_URL & Saver_Cookies
 
 ```bash
-export Saver_URL='https://example.com' "
+export Saver_URL='https://example.com'
 export Saver_Cookies='express.sid=\"s:YOURCOOKIES\"'
 ```
 3. Go
