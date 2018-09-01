@@ -2,7 +2,7 @@
 
 Topic_ID=40
 retry_Count=0
-
+dir=$1
 
 function check_env {
 if [[ $Saver_URL == '' ]]; then
