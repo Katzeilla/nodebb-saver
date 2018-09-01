@@ -51,13 +51,12 @@ function get_pageCount {
 }
 
 function topicFound {
-	if [[ $result==="Not Fount"  ]]; then
+	if [[ $result==="Not Found"  ]]; then
 		false
 	else
 		true
 	fi
 }
-
 
 # save_topic <Topic_ID>
 # Save Json to disk
@@ -93,15 +92,20 @@ function main {
 	do
 		echo "Get topic $Topic_ID"
 		get_topic $Topic_ID
-
-		if [ topicFound ]; then
+		
+		if topicFound ; then
 			save_topic	
 			Topic_ID=$(( $Topic_ID + 1 ))
 		else
+		    
+
 		    if [[ $retry_Count -le 10  ]]; then
+			    echo "Topic "$Topic_ID" not found, keep trying ("$retry_Count"/10)"
+			    retry_Count=$(( $retry_Count + 1 ))
 			    Topic_ID=$(( $Topic_ID + 1 ))
 		    else
 			    echo "Done!"
+			    exit 0
 		    fi
 
 		fi
