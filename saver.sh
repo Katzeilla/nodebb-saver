@@ -1,6 +1,6 @@
 #! /bin/bash
 
-Topic_ID=40
+Topic_ID=1
 retry_Count=0
 dir=$1
 
@@ -88,8 +88,6 @@ function save_topic {
 
 function main {
 	check_env
-#	get_topic 41	
-#	get_pageCount
 	
 	while true
 	do
