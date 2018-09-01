@@ -5,6 +5,16 @@ retry_Count=0
 dir=$1
 
 function check_env {
+if ! [ -x "$(command -v jq)" ]; then
+	  echo 'Error: jq is not installed.' >&2
+	  exit 3
+fi
+
+if ! [ -x "$(command -v curl)" ]; then
+	  echo 'Error: curl is not installed.' >&2
+	  exit 4
+fi
+
 if [[ $Saver_URL == '' ]]; then
 	echo 'Error: You have to set $Saver_URL first.'
 	echo "\$ export Saver_URL='https://example.com' "
@@ -17,17 +27,20 @@ if [[ $Saver_Cookies == '' ]]; then
 	exit 2 
 fi
 
-
-if ! [ -x "$(command -v jq)" ]; then
-	  echo 'Error: jq is not installed.' >&2
-	  exit 3
+if [[ $dir == '' ]]; then
+	echo 'Error: You have to set name of output directory first.'
+	echo "\$ ./saver.sh MyNodeBB "
+	exit 1
 fi
 
-if ! [ -x "$(command -v curl)" ]; then
-	  echo 'Error: curl is not installed.' >&2
-	  exit 4
-fi
 
+if [[ $Saver_retry_max == '' ]]; then
+	echo 'Info: $Saver_retry_max not set, use 10'
+	echo "\$ export Saver_retry_max=10 "
+	retry_max=10
+else
+	retry_max=$Saver_retry_max
+fi
 }
 
 # get_topic <topic_ID> [<page_ID>]
@@ -51,7 +64,7 @@ function get_pageCount {
 }
 
 function topicFound {
-	if [[ $result==="Not Found"  ]]; then
+	if [ "$result" == "Not Found"  ]; then
 		false
 	else
 		true
@@ -93,15 +106,15 @@ function main {
 	do
 		echo "Get topic $Topic_ID"
 		get_topic $Topic_ID
-		
-		if topicFound ; then
+
+		if topicFound; then
 			save_topic	
 			Topic_ID=$(( $Topic_ID + 1 ))
 		else
 		    
 
-		    if [[ $retry_Count -le 10  ]]; then
-			    echo "Topic "$Topic_ID" not found, keep trying ("$retry_Count"/10)"
+		    if [[ $retry_Count -le $retry_max  ]]; then
+			    echo "Topic "$Topic_ID" not found, keep trying ("$retry_Count"/"$retry_max")"
 			    retry_Count=$(( $retry_Count + 1 ))
 			    Topic_ID=$(( $Topic_ID + 1 ))
 		    else
