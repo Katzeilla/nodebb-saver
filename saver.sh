@@ -65,7 +65,8 @@ function save_topic {
 	if [ ! -d $dir ]; then
 		mkdir ./$dir  	
 	fi
-
+	
+	echo "Save Topic $Topic_ID / Page 1"
 	echo $result > ./$dir/Topic_$Topic_ID.json
 
 	if [[ $(get_pageCount) > 1  ]]; then 
