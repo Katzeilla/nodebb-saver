@@ -70,7 +70,17 @@ function save_topic {
 	echo $result > ./$dir/Topic_$Topic_ID.json
 
 	if [[ $(get_pageCount) > 1  ]]; then 
-	echo "LT 1"
+	
+		while [ $pageCount -le $(get_pageCount) ]
+		do
+		
+			get_topic $Topic_ID $pageCount
+			echo $result > ./$dir/Topic_$Topic_ID\_$pageCount.json
+			pageCount=$(( $pageCount + 1 ))
+			
+		done
+
+	
 	fi	
 }
 
