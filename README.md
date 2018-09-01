@@ -11,10 +11,14 @@ A bash script for save NodeBB content as json file, via native NodeBB API, no se
 
 ```bash
 export Saver_URL='https://example.com'
-export Saver_Cookies='express.sid=\"s:YOURCOOKIES\"'
+export Saver_Cookies='express.sid="s:YOURCOOKIES"'
 ```
 3. Go
 
 ```bash
 ./saver.sh MyNodeBB
 ```
+
+## Todo
+
+- [ ]  Download image
