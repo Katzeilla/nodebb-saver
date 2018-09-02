@@ -1,6 +1,7 @@
 # nodebb-saver
 A bash script for save NodeBB content as json file, via native NodeBB API, no server-side plugin required.
 
+
 ## Usage
 
 0. Make sure `jq` and `curl` are installed
@@ -18,7 +19,23 @@ export Saver_Cookies='express.sid="s:YOURCOOKIES"'
 ```bash
 ./saver.sh MyNodeBB
 ```
+## Convert JSON to human readable HTML
+
+
+```bash
+cd ./MyNodeBB
+sh -c 'find -name "*.json" -exec jq -r .posts[].content {} \;' > all.html
+```
+
+View in firefox
+
+```bash
+firefox ./all.html
+```
+Note: Set 'text decode' to Unicode if the page is not correctly decoded.
 
 ## Todo
 
 - [ ]  Download image
+- [ ]  Better HTML
+
