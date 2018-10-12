@@ -1,5 +1,5 @@
 # nodebb-saver
-A bash script for save NodeBB content as json file, via native NodeBB API, no server-side plugin required.
+A bash script for save NodeBB content as JSON file, via native NodeBB API, no server-side plugin required.
 
 
 ## Usage
